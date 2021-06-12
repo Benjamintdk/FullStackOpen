@@ -43,7 +43,8 @@ const Header = ({ name }) => {
       <div>
         <Header name={name} />
         <Content parts={parts} />
-        <b><Total parts={parts} /></b>
+        <br />
+        <Total parts={parts} />
       </div>
     )
   }
