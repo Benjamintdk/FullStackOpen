@@ -1,6 +1,4 @@
 import axios from 'axios'
-/* For json_server */
-// const baseURL = "http://localhost:3001/persons"
 /* For express serving static files with build */
 const baseURL = "/api/persons"
 

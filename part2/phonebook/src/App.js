@@ -37,8 +37,11 @@ const App = () => {
                         setPersons(persons.map(person => person.name.toLowerCase() !== newName.toLowerCase() ? person : updatedPerson))
                         setNewName('')
                         setNewNumber('')
-                        }  
-                      )
+                        })
+                      .catch(error => {
+                        console.log(error.response.data)
+                        notif(error.response.data.error, 'error')
+                      })
       }
     }
     else {
@@ -48,6 +51,10 @@ const App = () => {
                       setPersons(persons.concat(newPerson))
                       setNewName('')
                       setNewNumber('')
+                    })
+                    .catch(error => {
+                      console.log(error.response.data)
+                      notif(error.response.data.error, 'error')
                     })
     }
   }
