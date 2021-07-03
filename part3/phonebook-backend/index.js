@@ -40,6 +40,16 @@ const errorHandler = (error, request, response, next) => {
     next(error)
 }
 
+const requestLogger = (request, response, next) => {
+    console.log('Method:', request.method)
+    console.log('Path:', request.path)
+    console.log('Body:', request.body)
+    console.log('---')
+    next()
+}
+
+app.use(requestLogger)
+
 app.get('/api/persons/', (request, response, next) => {
     Person.find({})
         .then(persons => response.json(persons))
