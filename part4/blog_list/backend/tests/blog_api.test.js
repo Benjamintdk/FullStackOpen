@@ -4,7 +4,9 @@ const supertest = require('supertest')
 const app = require('../app')
 const api = supertest(app)
 const helper = require('./test_helper')
+const bcrypt = require('bcrypt')
 const Blog = require('../models/Blog')
+const User = require('../models/User')
 
 beforeEach(async () => {
     await Blog.deleteMany({})
@@ -36,6 +38,42 @@ describe('checks that each blog post has the property id', () =>
 )
 
 describe('addition of a new post', () => {
+    let headers 
+    beforeEach(async () => {
+        const newUser = {
+            username: 'root',
+            name: 'root',
+            password: 'pass123'
+        }
+
+        await api.post('/api/users')
+            .send(newUser)
+
+        const result = await api.post('/api/login')
+            .send(newUser)
+
+        headers = {
+            'Authorization': `bearer ${result.body.token}`
+        }
+    })
+
+    test('fails if no token is provided', async () => {
+        const newPost = {
+            title: "Narnia",
+            author: "C S Lewis",
+            url: "https://narnia.com",
+            likes: 100
+        }
+
+        await api.post('/api/blogs')
+            .send(newPost)
+            .expect(401)
+            .expect('Content-Type', /application\/json/)
+
+        const posts = await helper.postsInDb()
+        expect(posts).toHaveLength(helper.initialPosts.length)
+    })
+
     test('succeeds with valid data', async () => {
         const newPost = {
             title: "Narnia",
@@ -45,6 +83,7 @@ describe('addition of a new post', () => {
         }
 
         await api.post('/api/blogs')
+            .set(headers)
             .send(newPost)
             .expect(200)
             .expect('Content-Type', /application\/json/)
@@ -62,6 +101,7 @@ describe('addition of a new post', () => {
         })
 
         await api.post('/api/blogs')
+            .set(headers)
             .send(newPost)
             .expect(400)
 
@@ -77,6 +117,7 @@ describe('addition of a new post', () => {
         }
 
         await api.post('/api/blogs')
+            .set(headers)
             .send(newPost)
             .expect(200)
             .expect('Content-Type', /application\/json/)
@@ -126,6 +167,70 @@ describe('update of post', () => {
         const postUpdated = postsAtEnd[0]
 
         expect(postUpdated.likes).toBe(newLikes)
+    })
+})
+
+describe('addition of new users', () => {
+    beforeEach(async () => {
+        await User.deleteMany({})
+
+        const passwordHash = await bcrypt.hash('sekret', 10)
+        console.log(passwordHash)
+        const user = new User({ username:'root', passwordHash })
+        await user.save()
+    })
+
+    test('checks that password and username length meet requirement', async () => {
+        const usersAtStart = await helper.usersInDb()
+        const newUser1 = {
+            username: 'No',
+            name: 'Superuser',
+            password: 'password123'
+        }
+
+        const newUser2 = {
+            username: 'Nothing',
+            name: 'Superuser',
+            password: '1'
+        }
+
+        const result1 = await api.post('/api/users')
+        .send(newUser1)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+        expect(result1.body.error).toContain('is shorter than the minimum allowed length')
+
+        const result2 = await api.post('/api/users')
+        .send(newUser2)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+        expect(result2.body.error).toContain('password length must be at least 3 characters long')
+
+        const usersAtEnd = await helper.usersInDb()
+        expect(usersAtEnd).toHaveLength(usersAtStart.length)
+
+    })
+
+    test('creation fails with proper statuscode and message if username is already taken', async () => {
+        const usersAtStart = await helper.usersInDb()
+
+        const newUser = {
+            username: 'root',
+            name: 'Superuser',
+            password: 'password123'
+        }
+
+        const result = await api.post('/api/users')
+            .send(newUser)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+        expect(result.body.error).toContain('`username` to be unique')
+
+        const usersAtEnd = await helper.usersInDb()
+        expect(usersAtEnd).toHaveLength(usersAtStart.length)
     })
 })
 
