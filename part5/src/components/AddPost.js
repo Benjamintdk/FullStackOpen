@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Input = ({ placeholder, value, handleChange }) => {
     return (
@@ -8,7 +8,30 @@ const Input = ({ placeholder, value, handleChange }) => {
     )
 }
 
-const AddPost = ({ newTitle, newAuthor, newUrl, handleTitleChange, handleAuthorChange, handleUrlChange, addPost }) => {
+const AddPost = ({ createPost }) => {
+    const [ newTitle, setNewTitle ] = useState('')
+    const [ newAuthor, setNewAuthor ] = useState('')
+    const [ newUrl, setNewUrl ] = useState('')
+
+    const handleTitleChange = (event) => setNewTitle(event.target.value)
+    const handleAuthorChange = (event) => setNewAuthor(event.target.value)
+    const handleUrlChange = (event) => setNewUrl(event.target.value)
+
+    const addPost = event => {
+        event.preventDefault()
+        const newItem = {
+            title: newTitle,
+            author: newAuthor,
+            url: newUrl,
+            likes: Math.floor(Math.random() * 100)
+        }
+
+        createPost(newItem)
+        setNewTitle('')
+        setNewAuthor('')
+        setNewUrl('')
+    }
+
     return (
         <div>
             <h2>Create New</h2>
