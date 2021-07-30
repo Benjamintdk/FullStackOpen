@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
-const Input = ({ placeholder, value, handleChange }) => {
+const Input = ({ placeholder, value, handleChange, id }) => {
     return (
         <div>
-            {placeholder} <input value={value} onChange={handleChange}></input>
+            {placeholder} <input id={id} value={value} onChange={handleChange}></input>
         </div>
     )
 }
@@ -36,9 +36,9 @@ const AddPost = ({ createPost }) => {
         <div>
             <h2>Create New</h2>
             <form onSubmit={addPost}>
-                <Input placeholder={'Title:'} value={newTitle} handleChange={handleTitleChange} />
-                <Input placeholder={'Author:'} value={newAuthor} handleChange={handleAuthorChange} />
-                <Input placeholder={'Url:'} value={newUrl} handleChange={handleUrlChange} />
+                <Input placeholder={'Title:'} value={newTitle} handleChange={handleTitleChange} id='title' />
+                <Input placeholder={'Author:'} value={newAuthor} handleChange={handleAuthorChange} id='author' />
+                <Input placeholder={'Url:'} value={newUrl} handleChange={handleUrlChange} id='url' />
                 <button type='submit'>Add Post</button>
             </form>
         </div>
