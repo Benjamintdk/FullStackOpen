@@ -47,14 +47,14 @@ const Post = ({ post, updateLikes, deletePost }) => {
     }
 
     return (
-        <div style={blogStyle}>
+        <div id={post.title} style={blogStyle}>
             <li>
                 <p>{post.title} - {post.author}</p>
                 <ShowDetails buttonLabel="view">
-                    <br /><div className='url'>{post.url}</div>
-                    <br /><div className='likes'>likes {post.likes} <button onClick={increaseLikes}>like</button></div>
+                    <br /><div className="url">{post.url}</div>
+                    <br /><div className="likes">likes {post.likes} <button onClick={increaseLikes}>like</button></div>
                 </ShowDetails>
-                <button onClick={removePost}>remove</button>
+                <button id="removepost" onClick={removePost}>remove</button>
             </li>
         </div>
     )

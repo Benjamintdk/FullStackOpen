@@ -23,7 +23,7 @@ const AddPost = ({ createPost }) => {
             title: newTitle,
             author: newAuthor,
             url: newUrl,
-            likes: Math.floor(Math.random() * 100)
+            likes: 0
         }
 
         createPost(newItem)
@@ -39,7 +39,7 @@ const AddPost = ({ createPost }) => {
                 <Input placeholder={'Title:'} value={newTitle} handleChange={handleTitleChange} id='title' />
                 <Input placeholder={'Author:'} value={newAuthor} handleChange={handleAuthorChange} id='author' />
                 <Input placeholder={'Url:'} value={newUrl} handleChange={handleUrlChange} id='url' />
-                <button type='submit'>Add Post</button>
+                <button id='createpost' type='submit'>Add Post</button>
             </form>
         </div>
     )
