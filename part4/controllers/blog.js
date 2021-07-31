@@ -27,16 +27,23 @@ blogRouter.post('/', userExtractor, async (request, response) => {
   response.json(savedPost)
 })
 
-blogRouter.put('/:id', async (request, response) => {
-  const body = request.body
-  const newPost = {
-    title: body.title,
-    author: body.author,
-    url: body.url,
-    likes: body.likes
+blogRouter.put('/:id', userExtractor, async (request, response) => {
+  const user = request.user
+  const blog = await Blog.findById(request.params.id)
+  if (blog.user.toString() === user._id.toString()) {
+    const body = request.body
+    const newPost = {
+      title: body.title,
+      author: body.author,
+      url: body.url,
+      likes: body.likes
+    }
+    const updatedPost = await Blog.findByIdAndUpdate(request.params.id, newPost, { runValidators: true, new: true, context: 'query' })
+    response.json(updatedPost.toJSON())
   }
-  const updatedPost = await Blog.findByIdAndUpdate(request.params.id, newPost, { runValidators: true, new: true, context: 'query' })
-  response.json(updatedPost.toJSON())
+  else {
+    response.status(401).json({ error: "you are not authorized to update this blog post" })
+  }
 })
 
 blogRouter.delete('/:id', userExtractor, async (request, response) => {
