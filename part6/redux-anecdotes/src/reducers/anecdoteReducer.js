@@ -36,7 +36,7 @@ export const addNewAnecdote = content => {
   }
 }
 
-const reducer = (state = initialState, action) => {
+const AnecdoteReducer = (state = initialState, action) => {
   switch (action.type) {
   case 'VOTE': {
     const id = action.data.id
@@ -54,4 +54,4 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-export default reducer
+export default AnecdoteReducer
