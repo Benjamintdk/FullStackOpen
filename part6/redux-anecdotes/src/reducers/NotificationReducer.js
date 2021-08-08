@@ -1,14 +1,15 @@
-export const DisplayMessage = notification => {
-    return {
-        type: 'DISPLAY',
-        notification
-    }
-}
-
-export const HideMessage = () => {
-    return {
-        type: 'HIDE',
-        notification: null
+export const DisplayMessage = (notification, time) => {
+    return async dispatch => {
+        dispatch({
+            type: 'DISPLAY',
+            notification
+        })
+        setTimeout(() => {
+            dispatch({
+                type: 'HIDE',
+                notification: null
+            })
+        }, time * 1000)
     }
 }
 
