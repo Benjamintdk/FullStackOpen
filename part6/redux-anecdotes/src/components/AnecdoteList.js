@@ -9,19 +9,20 @@ const AnecdoteList = () => {
     const anecdotesToShow = useSelector(({ anecdotes, filter }) => {
         if (filter !== '') {
             return anecdotes.filter(anec => anec.content.toLowerCase().match(filter))
-            .sort((a, b) => a.votes > b.votes ? -1 : 1)
         }
         return anecdotes
     })
 
     const vote = (anecdote) => {
-        dispatch(DisplayMessage(`you voted ${anecdote.content}`, 10))
+        dispatch(DisplayMessage(`you voted ${anecdote.content}`, 5))
         dispatch(incrementVote(anecdote))
     }
 
     return (
         <div>
-        {anecdotesToShow.map(anecdote =>
+        {anecdotesToShow
+        .sort((a, b) => a.votes > b.votes ? -1 : 1)
+        .map(anecdote =>
             <div key={anecdote.id}>
             <div>
                 {anecdote.content}
