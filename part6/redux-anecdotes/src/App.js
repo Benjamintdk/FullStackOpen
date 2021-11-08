@@ -12,7 +12,7 @@ const App = () => {
 
   useEffect(() => 
     dispatch(initAnecdotes())
-    ,[dispatch])
+    , [dispatch])
 
   return (
     <div>

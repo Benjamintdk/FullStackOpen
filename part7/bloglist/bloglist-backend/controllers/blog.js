@@ -10,11 +10,8 @@ blogRouter.get('/', async (request, response) => {
 blogRouter.post('/', userExtractor, async (request, response) => {
   const blog = request.body
   const user = request.user
-
   const newPost = new Blog({
-    title: blog.title,
-    author: blog.author,
-    url: blog.url,
+    ...blog,
     likes: blog.likes === undefined ? 0 : blog.likes,
     user: user._id
   })

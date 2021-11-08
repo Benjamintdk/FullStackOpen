@@ -27,7 +27,7 @@ const App = () => {
 
     const updateLikes = async (newPost) => {
         const postToUpdate = posts.find(post => post.title === newPost.title)
-        const postWithUser = { ...newPost, user:user.id }
+        const postWithUser = { ...newPost, user:postToUpdate.user.id }
         const response = await postService.update(postToUpdate.id, postWithUser)
         setPosts(posts.map(post => post.title.toLowerCase() !== response.title.toLowerCase() ? post : response))
         notif(`a blog ${response.title} has been updated`, 'success')
@@ -97,7 +97,7 @@ const App = () => {
                     <>
                         <DisplayUser name={user.name} handleLogOut={handleLogOut} />
                         {newBlog()}
-                        <DisplayPosts posts={posts} updateLikes={updateLikes} deletePost={deletePost} />
+                        <DisplayPosts posts={posts} updateLikes={updateLikes} deletePost={deletePost} user={user} />
                     </>
             }
         </div>
