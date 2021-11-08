@@ -21,7 +21,7 @@ const ShowDetails = (props) => {
     )
 }
 
-const Post = ({ post, updateLikes, deletePost }) => {
+const Post = ({ post, updateLikes, deletePost, loggedUser }) => {
     const blogStyle = {
         paddingTop: 10,
         paddingLeft: 2,
@@ -54,7 +54,10 @@ const Post = ({ post, updateLikes, deletePost }) => {
                     <br /><div className="url">{post.url}</div>
                     <br /><div className="likes">likes {post.likes} <button onClick={increaseLikes}>like</button></div>
                 </ShowDetails>
-                <button id="removepost" onClick={removePost}>remove</button>
+                {loggedUser.username === post.user.username ?
+                    <button id="removepost" onClick={removePost}>remove</button>
+                    : null
+                }
             </li>
         </div>
     )

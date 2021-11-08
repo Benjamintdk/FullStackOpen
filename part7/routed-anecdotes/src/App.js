@@ -177,21 +177,21 @@ const App = () => {
     <div>
       <h1>Software anecdotes</h1>
       <Notification message={notification} />
-        <Menu />
-        <Switch>
-          <Route path='/anecdotes/:id'>
-            <Anecdote anecdote={anecdote} />
-          </Route>
-          <Route path='/about'>
-            <About />
-          </Route>
-          <Route path='/create'>
-            <CreateNew addNew={addNew} />
-          </Route>
-          <Route path='/'>
-            <AnecdoteList anecdotes={anecdotes} />
-          </Route>
-        </Switch>
+      <Menu />
+      <Switch>
+        <Route path='/anecdotes/:id'>
+          <Anecdote anecdote={anecdote} />
+        </Route>
+        <Route path='/about'>
+          <About />
+        </Route>
+        <Route path='/create'>
+          <CreateNew addNew={addNew} />
+        </Route>
+        <Route path='/'>
+          <AnecdoteList anecdotes={anecdotes} />
+        </Route>
+      </Switch>
       <div>
         <Footer />
       </div>
