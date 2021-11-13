@@ -92,7 +92,7 @@ let books = [
 const typeDefs = gql`
   type Book {
     title: String!
-    published: Int!
+    published: String!
     author: String!
     genres: [String!]!
     id: ID!
@@ -101,7 +101,7 @@ const typeDefs = gql`
   type Author {
       name: String!
       bookCount: Int!
-      born: Int
+      born: String
       id: ID!
   }
 
@@ -116,12 +116,12 @@ const typeDefs = gql`
     addBook(
       author: String!
       title: String!
-      published: Int!
+      published: String!
       genres: [String!]
     ): Book
     editAuthor(
       name: String!
-      setBornTo: Int!
+      birthYear: String!
     ): Author
   }
 `
@@ -153,7 +153,7 @@ const resolvers = {
         return newBook
       },
       editAuthor: (root, args) => {
-        if (!args.name || !args.setBornTo) {
+        if (!args.name || !args.birthYear) {
           throw new UserInputError('Name or new year is missing')
         }
 
@@ -163,7 +163,7 @@ const resolvers = {
           return null
         }
 
-        const updatedAuthor = { ...authorToUpdate, born: args.setBornTo }
+        const updatedAuthor = { ...authorToUpdate, born: args.birthYear }
         authors = authors.map(a => a.name !== updatedAuthor.name ? a : updatedAuthor)
         return updatedAuthor
       }
