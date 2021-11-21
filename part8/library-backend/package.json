@@ -1,0 +1,24 @@
+{
+  "name": "part8",
+  "version": "1.0.0",
+  "description": "Small library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node library-backend.js"
+  },
+  "keywords": [
+    "books",
+    "authors"
+  ],
+  "author": "Benjamin Chew",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.21.0",
+    "graphql": "^15.5.0",
+    "graphql-subscriptions": "^2.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.12",
+    "mongoose-unique-validator": "^3.0.0"
+  }
+}
