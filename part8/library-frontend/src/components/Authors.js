@@ -8,7 +8,10 @@ const Authors = (props) => {
   const results = useQuery(ALL_AUTHORS)
 
   const [ editAuthor ] = useMutation(EDIT_AUTHOR, {
-    refetchQueries: [ ALL_AUTHORS ]
+    refetchQueries: [ ALL_AUTHORS ],
+    onError: (error) => {
+        props.setError(error.graphQLErrors[0].message)
+    }
   })
 
   const [ name, setName ] = useState('')
@@ -27,7 +30,7 @@ const Authors = (props) => {
   const changeBirthYear = async (event) => {
     event.preventDefault()
 
-    await editAuthor({ variables: { name, birthYear } })
+    await editAuthor({ variables: { name: name, birthYear: parseInt(birthYear) } })
 
     setBirthYear('')
     setName('')
@@ -61,8 +64,8 @@ const Authors = (props) => {
       <form onSubmit={changeBirthYear} >
         <div>name: <select value={name} onChange={({ target }) => setName(target.value)}>
           {authors.map(a => 
-            <option key={a.name} value={a.name}>{a.name}</option>)
-          }
+            <option key={a.name} value={a.name}>{a.name}</option>
+          )}
       </select></div>
         <div>born: <input value={birthYear} onChange={({ target }) => setBirthYear(target.value)} /></div>
         <button type="submit">update author</button>
