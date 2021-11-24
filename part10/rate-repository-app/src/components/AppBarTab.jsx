@@ -9,11 +9,11 @@ const styles = StyleSheet.create({
     }
   });
 
-const AppBarTab = ({ to, tabName }) => {
+const AppBarTab = ({ to, tabName, onPress }) => {
 
     return (
         <Pressable style={styles.container}>
-            <Link to={to}>
+            <Link to={to} onPress={onPress}>
                 <Text fontSize='heading' color='white'>{tabName}</Text>
             </Link>
         </Pressable>
