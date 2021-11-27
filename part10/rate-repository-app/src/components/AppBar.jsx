@@ -48,6 +48,27 @@ const AppBar = () => {
                         onPress={() => signOut()}
                     />
                 }
+                {
+                    authorizedUser &&
+                    <AppBarTab 
+                        to='/create-review'
+                        tabName='Create Review'
+                    />
+                }
+                {
+                    !authorizedUser &&
+                    <AppBarTab 
+                        to='/sign-up'
+                        tabName='Sign up'
+                    />
+                }
+                {
+                    authorizedUser &&
+                    <AppBarTab 
+                        to='/my-reviews'
+                        tabName='My Reviews'
+                    />
+                }
             </ScrollView>
         </View>
     );

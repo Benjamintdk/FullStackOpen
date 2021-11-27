@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
   fontSizeHeading: {
     fontSize: theme.fontSizes.heading
   },
+  fontSizeRating: {
+    fontSize: theme.fontSizes.rating
+  },
   fontSizeBody: {
     fontSize: theme.fontSizes.body
   },
@@ -47,6 +50,7 @@ const Text = ({ color, fontSize, fontWeight, style, backgroundColor, flexWrap, .
     color === 'white' && styles.colorWhite,
     fontSize === 'subheading' && styles.fontSizeSubheading,
     fontSize === 'heading' && styles.fontSizeHeading,
+    fontSize === 'rating' && styles.fontSizeRating,
     fontSize === 'body' && styles.fontSizeBody,
     fontWeight === 'bold' && styles.fontWeightBold,
     backgroundColor === 'primary' && styles.fontBackGround,

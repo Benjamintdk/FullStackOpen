@@ -32,19 +32,32 @@ const styles = StyleSheet.create({
 const SignInForm = ({ onSubmit }) => {
 
     return (
-    <View>
-        <FormikTextInput name="username" placeholder="username" />
-        <FormikTextInput name="password" placeholder="password" secureTextEntry={true}/>
-        <Pressable onPress={onSubmit} style={styles.button}>
-            <Text 
-                fontSize='heading' 
-                color='white' 
-                backgroundColor='primary'>
-                    Sign in 
-            </Text>
-        </Pressable>
-    </View>
+        <View>
+            <FormikTextInput testID='username' name="username" placeholder="username" />
+            <FormikTextInput testID='password' name="password" placeholder="password" secureTextEntry={true}/>
+            <Pressable testID='sign-in' onPress={onSubmit} style={styles.button}>
+                <Text 
+                    fontSize='heading' 
+                    color='white' 
+                    backgroundColor='primary'>
+                        Sign in 
+                </Text>
+            </Pressable>
+        </View>
     );
+};
+
+export const SignInContainer = ({ initialValues, validationSchema, onSubmit }) => {
+
+    return (
+        <Formik 
+            initialValues={initialValues} 
+            onSubmit={onSubmit}
+            validationSchema={validationSchema}>
+                {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
+        </Formik>
+    );
+
 };
 
 const SignIn = () => {
@@ -66,12 +79,11 @@ const SignIn = () => {
     };
 
     return (
-        <Formik 
+        <SignInContainer 
             initialValues={initialValues} 
             onSubmit={onSubmit}
-            validationSchema={validationSchema}>
-                {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
-        </Formik>
+            validationSchema={validationSchema}
+        />
     );
 };
 
