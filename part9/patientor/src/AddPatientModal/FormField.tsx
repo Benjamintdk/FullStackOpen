@@ -57,15 +57,16 @@ export const TextField= ({
 */
 interface NumberProps extends FieldProps {
   label: string;
+  placeholder: number;
   errorMessage?: string;
   min: number;
   max: number;
 }
 
-export const NumberField = ({ field, label, min, max } : NumberProps ) => (
+export const NumberField = ({ field, label, placeholder, min, max } : NumberProps ) => (
   <Form.Field>
     <label>{label}</label>
-    <Field {...field} type='number' min={min} max={max} />
+    <Field {...field} placeholder={placeholder} type='number' min={min} max={max} />
 
     <div style={{ color:'red' }}>
       <ErrorMessage name={field.name} />
