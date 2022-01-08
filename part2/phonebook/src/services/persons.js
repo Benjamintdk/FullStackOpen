@@ -1,6 +1,6 @@
 import axios from 'axios'
 /* For express serving static files with build */
-const baseURL = "/api/persons"
+const baseURL = "http://localhost:3001/persons"
 
 const getAll = () => axios.get(baseURL).then(response => response.data)
 
